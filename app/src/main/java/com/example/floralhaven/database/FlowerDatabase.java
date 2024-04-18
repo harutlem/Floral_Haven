@@ -13,16 +13,18 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.floralhaven.database.entities.OrderHistory;
 import com.example.floralhaven.MainActivity;
+import com.example.floralhaven.database.entities.User;
 import com.example.floralhaven.database.typeConverters.LocalDateTypeConverter;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @TypeConverters(LocalDateTypeConverter.class)
-@Database(entities = {OrderHistory.class}, version = 1, exportSchema = false)
+@Database(entities = {OrderHistory.class, User.class}, version = 1, exportSchema = false)
 public abstract class FlowerDatabase extends RoomDatabase {
 
 
+    public static final String USER_TABLE = "usertable";
     private static final String DATABASE_NAME = "FlowerDatabase";
     public static final String ORDER_HISTORY_TABLE = "orderHistoryTable";
 
@@ -58,9 +60,19 @@ public abstract class FlowerDatabase extends RoomDatabase {
         public void onCreate(@NonNull SupportSQLiteDatabase db){
             super.onCreate(db);
             Log.i(MainActivity.TAG, "DATABASE CREATED!");
-            //Todo: add databaseWriteExecutor.execute(() -> {...}
+            databaseWriteExecutor.execute(() -> {
+                UserDAO dao = INSTANCE.userDao();
+           //     dao.deleteAll();
+                User admin = new User("admin1", "admin1");
+                admin.setAdmin(true);
+                dao.insert(admin);
+                User testUser1 = new User("testuser1", "testuser1");
+                dao.insert(testUser1);
+            });
         }
     };
 
     public abstract FlowerDAO flowerDAO();
+
+    public abstract UserDAO userDao();
 }

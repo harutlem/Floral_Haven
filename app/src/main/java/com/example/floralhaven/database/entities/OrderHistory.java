@@ -16,6 +16,7 @@ public class OrderHistory {
     private LocalDateTime date;
     private String flowerName;
     private int flowerQuantity;
+    private int userId;
 
     public int getId() {
         return id;
@@ -49,23 +50,33 @@ public class OrderHistory {
         this.flowerQuantity = flowerQuantity;
     }
 
+
+
+    public OrderHistory(String flowerName, int flowerQuantity, int userId) {
+        this.flowerName = flowerName;
+        this.flowerQuantity = flowerQuantity;
+        this.userId = userId;
+        date =  LocalDateTime.now();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrderHistory that = (OrderHistory) o;
-        return id == that.id && flowerQuantity == that.flowerQuantity && Objects.equals(date, that.date) && Objects.equals(flowerName, that.flowerName);
+        return id == that.id && flowerQuantity == that.flowerQuantity && userId == that.userId && Objects.equals(date, that.date) && Objects.equals(flowerName, that.flowerName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, date, flowerName, flowerQuantity);
+        return Objects.hash(id, date, flowerName, flowerQuantity, userId);
     }
 
-    public OrderHistory(String flowerName, int flowerQuantity) {
-        this.flowerName = flowerName;
-        this.flowerQuantity = flowerQuantity;
-        date =  LocalDateTime.now();
+    public int getUserId() {
+        return userId;
     }
 
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 }

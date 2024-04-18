@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.example.floralhaven.MainActivity;
 import com.example.floralhaven.database.entities.OrderHistory;
+import com.example.floralhaven.database.entities.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,8 @@ import java.util.concurrent.Future;
 import kotlinx.coroutines.flow.Flow;
 
 public class FlowerRepository {
-    private FlowerDAO flowerDAO;
+    private final FlowerDAO flowerDAO;
+    private final UserDAO userDAO;
     private ArrayList<OrderHistory> allLogs;
 
     private static FlowerRepository repository;
@@ -23,6 +25,7 @@ public class FlowerRepository {
     {
         FlowerDatabase db = FlowerDatabase.getDatabase(application);
         this.flowerDAO = db.flowerDAO();
+        this.userDAO = db.userDao();
         this.allLogs = (ArrayList<OrderHistory>) this.flowerDAO.getAllRecords();
     }
 
@@ -71,6 +74,12 @@ public class FlowerRepository {
     public void insertOrderHistory(OrderHistory orderHistory){
         FlowerDatabase.databaseWriteExecutor.execute(()->{
             flowerDAO.insert(orderHistory);
+        });
+    }
+
+    public void insertUser(User...user){
+        FlowerDatabase.databaseWriteExecutor.execute(()->{
+            userDAO.insert(user);
         });
     }
 }
