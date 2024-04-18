@@ -4,4 +4,8 @@
     <string name="view_cart">View Cart</string>
     <string name="order_history">Order History</string>
     <string name="welcome_user">Welcome: User</string>
+    <string name="login_welcome">Welcome to Floral Haven\n Please Sign in.</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Login!</string>
 </resources>
