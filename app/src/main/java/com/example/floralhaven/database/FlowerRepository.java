@@ -17,11 +17,36 @@ import kotlinx.coroutines.flow.Flow;
 public class FlowerRepository {
     private FlowerDAO flowerDAO;
     private ArrayList<OrderHistory> allLogs;
-    public FlowerRepository(Application application)
+
+    private static FlowerRepository repository;
+    private FlowerRepository(Application application)
     {
         FlowerDatabase db = FlowerDatabase.getDatabase(application);
         this.flowerDAO = db.flowerDAO();
         this.allLogs = (ArrayList<OrderHistory>) this.flowerDAO.getAllRecords();
+    }
+
+
+    public static FlowerRepository getRepository(Application application){
+        if(repository != null)
+        {
+            return repository;
+        }
+        Future<FlowerRepository> future = FlowerDatabase.databaseWriteExecutor.submit(
+                new Callable<FlowerRepository>() {
+                    @Override
+                    public FlowerRepository call() throws Exception {
+                        return new FlowerRepository(application);
+                    }
+                }
+        );
+        try{
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            Log.i(MainActivity.TAG, "Problem getting FlowerRepository, thread error.");
+        }
+        return null;
+
     }
 
     public ArrayList<OrderHistory> getAllLogs(){

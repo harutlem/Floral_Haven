@@ -7,11 +7,16 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.floralhaven.database.FlowerRepository;
 import com.example.floralhaven.databinding.ActivityMainBinding;
+
+import kotlinx.coroutines.flow.Flow;
 
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
+
+    private FlowerRepository repository;
 
     public static final String TAG = "HL_FLOWER";
     @Override
@@ -19,6 +24,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        repository = FlowerRepository.getRepository(getApplication());
+
+
 
     }
 }
