@@ -3,6 +3,8 @@ package com.example.floralhaven.database;
 import android.app.Application;
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
+
 import com.example.floralhaven.MainActivity;
 import com.example.floralhaven.database.entities.OrderHistory;
 import com.example.floralhaven.database.entities.User;
@@ -83,20 +85,12 @@ public class FlowerRepository {
         });
     }
 
-    public User getUserByUsername(String username) {
-        Future<User> future = FlowerDatabase.databaseWriteExecutor.submit(
-                new Callable<User>() {
-                    @Override
-                    public User call() throws Exception {
-                        return userDAO.getUserByUsername(username);
-                    }
-                });
-        try{
-            future.get();
-        }catch (InterruptedException | ExecutionException e){
-            Log.i(MainActivity.TAG, "Problem when getting user by Username");
-        }
-        return null;
-
+    public LiveData<User> getUserByUsername(String username) {
+        return userDAO.getUserByUsername(username);
     }
+
+    public LiveData<User> getUserByUserId(int userId) {
+        return userDAO.getUserByUserId(userId);
+    }
+
 }

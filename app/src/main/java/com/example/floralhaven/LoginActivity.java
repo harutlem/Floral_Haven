@@ -2,11 +2,13 @@ package com.example.floralhaven;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 
 import com.example.floralhaven.database.FlowerRepository;
 import com.example.floralhaven.database.entities.User;
@@ -16,8 +18,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private ActivityLoginBinding binding;
     private FlowerRepository repository;
-    private User user = null;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,46 +30,42 @@ public class LoginActivity extends AppCompatActivity {
         binding.loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!verifyUser())
-                {
-                    toastMaker("Invalid credentials");
-                }
-                else {
-                    Intent intent = MainActivity.mainActivityIntentFactory(getApplicationContext(), user.getId());
-                    startActivity(intent);
-                }
+                verifyUser();
 
             }
         });
 
     }
 
-    private boolean verifyUser()
+    private void verifyUser()
     {
         String username = binding.userNameLoginEditText.getText().toString();
+
         if(username.isEmpty())
         {
             toastMaker("Username should not be blank!");
-            return false;
+            return;
         }
 
-        user = repository.getUserByUsername(username);
-        if(user != null){
-            String password = binding.passwordLoginEditText.getText().toString();
-            if(password.equals(user.getPassword()))
-            {
-               return true;
-            }
-            else {
-                toastMaker("Invalid Password!");
-                return false;
-            }
-        }
+        LiveData<User> userObserver = repository.getUserByUsername(username);
+        userObserver.observe(this, user -> {
+            if(user != null){
+                String password = binding.passwordLoginEditText.getText().toString();
+                if(password.equals(user.getPassword())){
+                    startActivity(MainActivity.mainActivityIntentFactory(getApplicationContext(), user.getId()));
+                }
+                else{
+                    toastMaker("Invalid Password");
+                    binding.passwordLoginEditText.setSelection(0);
 
-             toastMaker(String.format("No %s Found"
-                     ,username));
+                }
+            }
+            else{
+                toastMaker(String.format("%s is not a valid username", username));
+                binding.userNameLoginEditText.setSelection(0);
+            }
+        });
 
-        return false;
     }
 
     private void toastMaker(String message) {
