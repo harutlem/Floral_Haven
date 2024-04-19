@@ -25,4 +25,7 @@ public interface UserDAO {
 
     @Query("DELETE FROM " + FlowerDatabase.USER_TABLE)
     void deleteAll();
+
+    @Query("SELECT * FROM " + FlowerDatabase.USER_TABLE + " WHERE userName == :username")
+    User getUserByUsername(String username);
 }
