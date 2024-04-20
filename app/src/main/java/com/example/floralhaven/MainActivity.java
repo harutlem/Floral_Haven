@@ -61,6 +61,30 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
+        binding.browseFlowersButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = BrowseFlowersActivity.BrowseIntentFactory(getApplicationContext());
+                startActivity(intent);
+            }
+        });
+
+        binding.viewCartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = ShoppingCartActivity.ShoppingIntentFactory(getApplicationContext());
+                startActivity(intent);
+            }
+        });
+
+        binding.orderHistoryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = OrderHistoryActivity.OrderIntentFactory(getApplicationContext());
+                startActivity(intent);
+            }
+        });
+
         updateSharedPreference();
 
 
@@ -99,6 +123,8 @@ public class MainActivity extends AppCompatActivity {
                 Button adminButton = findViewById(R.id.adminButton);//this
                 adminButton.setVisibility(View.VISIBLE);//this
             }
+
+
 
         });
 

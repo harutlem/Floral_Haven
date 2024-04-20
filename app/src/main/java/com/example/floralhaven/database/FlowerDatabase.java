@@ -11,6 +11,8 @@ import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.example.floralhaven.BrowseFlowersActivity;
+import com.example.floralhaven.database.entities.Flower;
 import com.example.floralhaven.database.entities.OrderHistory;
 import com.example.floralhaven.MainActivity;
 import com.example.floralhaven.database.entities.User;
@@ -20,13 +22,16 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @TypeConverters(LocalDateTypeConverter.class)
-@Database(entities = {OrderHistory.class, User.class}, version = 1, exportSchema = false)
+@Database(entities = {OrderHistory.class, User.class, Flower.class}, version = 2, exportSchema = false)
 public abstract class FlowerDatabase extends RoomDatabase {
 
 
     public static final String USER_TABLE = "usertable";
     private static final String DATABASE_NAME = "FlowerDatabase";
     public static final String ORDER_HISTORY_TABLE = "orderHistoryTable";
+
+    public static final String FLOWER_TABLE = "flowerTable";
+
 
     private static volatile FlowerDatabase INSTANCE;
     private static  final int NUMBER_OF_THREADS = 4;
@@ -71,6 +76,9 @@ public abstract class FlowerDatabase extends RoomDatabase {
             });
         }
     };
+
+  //  public abstract Object getInstance();
+
 
     public abstract FlowerDAO flowerDAO();
 

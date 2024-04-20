@@ -6,7 +6,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 
 import com.example.floralhaven.MainActivity;
-import com.example.floralhaven.database.entities.OrderHistory;
+import com.example.floralhaven.database.entities.Flower;
 import com.example.floralhaven.database.entities.User;
 
 import java.util.ArrayList;
@@ -15,12 +15,10 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-import kotlinx.coroutines.flow.Flow;
-
 public class FlowerRepository {
     private final FlowerDAO flowerDAO;
     private final UserDAO userDAO;
-    private ArrayList<OrderHistory> allLogs;
+    private ArrayList<Flower> allLogs;
 
     private static FlowerRepository repository;
     private FlowerRepository(Application application)
@@ -28,7 +26,7 @@ public class FlowerRepository {
         FlowerDatabase db = FlowerDatabase.getDatabase(application);
         this.flowerDAO = db.flowerDAO();
         this.userDAO = db.userDao();
-        this.allLogs = (ArrayList<OrderHistory>) this.flowerDAO.getAllRecords();
+        this.allLogs = (ArrayList<Flower>) this.flowerDAO.getAllRecords();
     }
 
 
@@ -54,13 +52,13 @@ public class FlowerRepository {
 
     }
 
-    public ArrayList<OrderHistory> getAllLogs(){
+    public ArrayList<Flower> getAllLogs(){
 
-        Future<ArrayList<OrderHistory>> future = FlowerDatabase.databaseWriteExecutor.submit(
-                new Callable<ArrayList<OrderHistory>>() {
+        Future<ArrayList<Flower>> future = FlowerDatabase.databaseWriteExecutor.submit(
+                new Callable<ArrayList<Flower>>() {
                     @Override
-                    public ArrayList<OrderHistory> call() throws Exception {
-                        return (ArrayList<OrderHistory>) flowerDAO.getAllRecords();
+                    public ArrayList<Flower> call() throws Exception {
+                        return (ArrayList<Flower>) flowerDAO.getAllRecords();
                     }
                 }
         );
@@ -73,9 +71,9 @@ public class FlowerRepository {
 
     }
 
-    public void insertOrderHistory(OrderHistory orderHistory){
+    public void insertFlower(Flower flower){
         FlowerDatabase.databaseWriteExecutor.execute(()->{
-            flowerDAO.insert(orderHistory);
+            flowerDAO.insert(flower);
         });
     }
 
@@ -92,5 +90,8 @@ public class FlowerRepository {
     public LiveData<User> getUserByUserId(int userId) {
         return userDAO.getUserByUserId(userId);
     }
+
+
+
 
 }
