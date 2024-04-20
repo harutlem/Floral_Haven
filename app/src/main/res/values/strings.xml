@@ -27,4 +27,10 @@
     <string name="clear_shopping_cart">Clear Shopping Cart</string>
     <string name="floral_haven_nshopping_cart">Floral Haven \nShopping Cart</string>
     <string name="go_back_order">Go Back</string>
+    <string name="or">Or</string>
+    <string name="signup">SignUp!</string>
+    <string name="please_enter_nusername_and_password_to_sign_up">Please Enter \nUsername and Password to Sign Up</string>
+    <string name="welcome_to_admin_portal">Welcome to Admin Portal!</string>
+    <string name="add_user">Add User!</string>
+    <string name="go_back_admin">Go Back</string>
 </resources>

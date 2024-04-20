@@ -85,6 +85,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        binding.adminButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = AdminAreaActivity.AdminIntentFactory(getApplicationContext());
+                startActivity(intent);
+            }
+        });
+
+
+
         updateSharedPreference();
 
 

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AdminAreaActivity">
+
+    <TextView
+        android:id="@+id/adminPortal"
+        android:layout_width="match_parent"
+        android:layout_height="150dip"
+        android:layout_margin="16dip"
+        android:gravity="center"
+        android:text="@string/welcome_to_admin_portal"
+        android:textSize="38sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+    <Button
+        android:id="@+id/AddUserButton"
+        android:layout_width="match_parent"
+        android:layout_height="105dip"
+        android:layout_margin="16dip"
+        android:text="@string/add_user"
+        android:textSize="32sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/adminPortal"
+
+        />
+
+    <Button
+        android:id="@+id/GoBackAdmin"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:layout_margin="16dip"
+        android:text="@string/go_back_admin"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/AddUserButton"
+
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
